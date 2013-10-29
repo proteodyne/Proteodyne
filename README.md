@@ -10,7 +10,7 @@ Please use Proteodyne with caution and wisdom. It can be health damaging if poor
 
 
 User guide
-==========
+----------
 
 To run Proteodyne you only need a recent version of Google Chrome or Firefox web browser.
 Open index.html file in your browser and you're done.
@@ -26,8 +26,14 @@ Generating animated GIF of a big protein can freeze your browser if your compute
 
 
 Developer guide
-===============
+---------------
 
 Sorry for the poor quality of the source. At the begining it was a quick'n'dirty test to see if it was doable in Javascript then became a software written in this horrible language in an horrible manner. A complete rewrite with backbone is planned.
 
 Note that I modified some externals libraries (Vextab, jsmidgen, ...) and didn't push the changes.
+
+
+Screenshot
+----------
+
+![Proteodyne screenshot](/screenshot.png "Proteodyne screenshot")
