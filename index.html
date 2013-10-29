@@ -1,0 +1,1284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns = "http://www.w3.org/1999/xhtml">
+<head>
+ <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+ <title>Proteodyne - Proteody generator</title>
+ <script src="js/jquery-1.9.1.min.js"></script>
+ <script src="js/knockout-2.2.1.js"></script>
+ <script src="js/globalize.min.js"></script>
+ <script src="js/dx.chartjs.js"></script>
+ 
+ <script src="js/vexflow-min.js"></script>
+ <script src="js/tabdiv-min.js"></script>
+ <script src="js/support/paper.min.js"></script>
+ <script src="js/support/audio.js"></script>
+ <script src="js/player.js"></script>
+
+ <script src="js/support/underscore-min.js"></script>
+ <script src="js/underscore.string.min.js"></script>
+ <script src="js/gif.js"></script>
+ <script src="js/simple_statistics.js"></script>
+ <script src="js/music.js"></script>
+ <script src="js/keycor.js"></script>
+ <script src="js/timbres.js"></script>
+ <script src="js/jsmidgen.js"></script>
+ <script src="js/jquery.easytabs.min.js"></script>
+ <!--link href='http://fonts.googleapis.com/css?family=Oswald|Roboto|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'-->
+ <style>
+ @font-face {
+  font-family: 'Open Sans Condensed';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Open Sans Cond Light'), local('OpenSans-CondensedLight'), url(css/fonts/OpenSansCondensedLight.woff) format('woff');
+}
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Oswald Regular'), local('Oswald-Regular'), url(css/fonts/OswaldRegular.woff) format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(css/fonts/RobotoRegular.woff) format('woff');
+}
+ 	h1 { font-family: 'Oswald', sans-serif; font-size: 48px; color: #333;}
+ 	h1 i { font-family: 'Open Sans Condensed', sans-serif; font-size: 55px; color: #555; }
+ 	h2 { font-family: 'Oswald', sans-serif; font-size: 36px; color: #333; }
+ 	h3,h4 { font-family: 'Open Sans Condensed', sans-serif; font-size: 24px; color: #888; }
+ 	p, th, td, textarea, h5, input[type=text] { font-family: 'Roboto', sans-serif; font-size: 18px; color: #333; }
+ 	textarea, input[type=text] { 
+ 		font-size: 16px; 
+ 		padding: 20px; 
+ 		width: 860px; 
+ 		height: 100px; 
+ 		margin-bottom: 20px; 
+ 		border: 1px solid #ddd;
+ 		border-radius: 3px;
+ 		box-shadow: inset 0px 1px 5px 1px #EEE;
+ 	}
+ 	input[type=text] {
+ 		width: 200px;
+ 		height: 1.6em;
+ 		padding: 2px 5px;
+ 		margin-bottom: auto;
+ 	}
+
+ 	a, a:visited { color: #0061a7; }
+    .myButton {
+        font-family: 'Roboto', sans-serif; 
+        font-size: 18px;
+        cursor: pointer;
+        -moz-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+        -webkit-box-shadow:inset 0px 1px 0px 0px #54a3f7;
+        box-shadow:inset 0px 1px 0px 0px #54a3f7;
+        
+        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #007dc1), color-stop(1, #0061a7));
+        background:-moz-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+        background:-webkit-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+        background:-o-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+        background:-ms-linear-gradient(top, #007dc1 5%, #0061a7 100%);
+        background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#007dc1', endColorstr='#0061a7',GradientType=0);
+        
+        background-color:#007dc1;
+        
+        -moz-border-radius:3px;
+        -webkit-border-radius:3px;
+        border-radius:3px;
+        
+        border:1px solid #124d77;
+        
+        display:inline-block;
+        color:#ffffff;
+        font-weight:normal;
+        padding:6px 24px;
+        text-decoration:none;
+        text-align: center;
+        text-shadow:0px 1px 0px #154682;
+        width: 150px;
+        height: 25px;
+        
+    }
+    .myButton:hover {
+        
+        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0061a7), color-stop(1, #007dc1));
+        background:-moz-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+        background:-webkit-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+        background:-o-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+        background:-ms-linear-gradient(top, #0061a7 5%, #007dc1 100%);
+        background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0061a7', endColorstr='#007dc1',GradientType=0);
+        
+        background-color:#0061a7;
+    }
+    .myButton:active {
+        position:relative;
+        top:1px;
+    }
+
+    #generate img {
+    	margin: 2px 0px 0px 0px;
+    }
+
+ 	html {
+ 		background: url(images/whitey.png) repeat;
+ 	}
+ 	body { 
+ 		line-height: 1.6em; 
+ 	}
+ 	.hor-minimalist-a
+	{
+		/*font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+		font-size: 12px;
+		*/
+		background: #fff;
+		margin: 45px 0px 0px;
+		width: 900px;
+		border-collapse: collapse;
+		text-align: left;
+		clear: both;
+	}
+	.hor-minimalist-a th, h5
+	{
+		font-weight: normal;
+		color: #039;
+		padding: 10px 8px;
+		border-bottom: 2px solid #6678b1;
+	}
+	.hor-minimalist-a td
+	{
+		font-size: 14px;
+		color: #669;
+		padding: 9px 8px 0px 8px;
+	}
+	.hor-minimalist-a tbody tr:hover td
+	{
+		color: #009;
+	}
+	.hor-minimalist-a th, .hor-minimalist-a td { text-align: right; }
+	.hor-minimalist-a .first { text-align: left; }
+	.hor-minimalist-a tbody tr:last-child td { padding-bottom: 8px; } 
+	.hor-minimalist-a tfoot td { background-color: #f4f6fa; padding-bottom: 8px; }
+
+	.hor-minimalist-a.mini { width: 250px; float: right; margin-top: -120px; margin-bottom: 40px; }
+ 	.hor-minimalist-a.mini td { color: #888; }
+ 	.hor-minimalist-a.mini tr td:first-child { text-align: left; }
+ 	.hor-minimalist-a.mini tfoot td { color: #039; }
+
+ 	.hor-minimalist-a thead tr th:last-child { text-align: right; }
+
+ 	.hor-minimalist-a.aleft th, .hor-minimalist-a.aleft td { text-align: left; }
+ 	/*.hor-minimalist-a.aleft thead tr th.first, .hor-minimalist-a.aleft tbody tr td.first { width: 150px; max-width: 150px; min-width: 150px; }
+*/
+ 	.bloc {
+ 		width: 900px;
+ 		padding: 50px 70px 75px;
+ 		box-shadow: 1px 1px 12px #aaa; /*, inset 0px 0px 0px 10px #f0f0f0;*/
+ 		margin: 100px auto;
+ 		background-color: white;
+ 	}
+ 	.bloc.hidden { display: none; }
+ 	
+ 	/*.scolors { display: inline-block; }*/
+ 	.cbloc { height: 10px; width: 10px; display: block; float: left; position: relative; margin-bottom: 2px; margin-left: 2px; }
+ 	.cbloc:hover { z-index: 30000; }
+ 	.cbloc span { display: inline-block; width: 10px; height: 10px; position: relative; }
+ 	.cbloc span:hover { 
+ 		width: 20px; height: 20px; 
+ 		margin: -7px 0px 0px -7px; 
+ 		border: 2px solid white;
+ 		box-shadow: 1px 1px 10px 2px #555; 
+ 		position: relative; z-index: inherit;}
+ 	/*.cbloc p {display: none; width: 10px; height: 10px; font-size: 10px; text-align: center; margin: 0px; color: #888; }
+ 	.cbloc:hover { width: 12px; height: 12px;}
+ 	.cbloc:hover span { width: 12px; height: 12px; }*/
+
+ 	#pheader h2 { width: 650px; line-height: 1em; }
+
+
+ 	#timbresStim, #timbresInhib { display: inline-block; float: right; margin-top: -13px;}
+ 	#timbresStim select, #timbresInhib select {
+		-webkit-appearance: none;
+		padding: 5px 10px;
+		font-size: 20px;
+		font-family: 'Open Sans Condensed', sans-serif;
+		font-weight: bold;
+		border: 3px solid #ddd;
+		text-align: left;
+		color: #555;
+		padding-right: 30px;
+		margin-right: -25px;
+ 	}
+
+ 	#timbresStim::after, #timbresInhib::after {
+ 		content: "▼"; /* \25BC */
+        text-align: right;
+        font-size: 60%;
+        color: #555;
+        pointer-events:none;
+        margin-right: 20px;
+ 	}
+
+ 	.optbtn {
+ 		cursor: pointer;
+		font-size: 36px;
+		font-weight: 300;
+		width: 20px;
+		padding: 8px 12px 8px 10px;
+		color: #ccc;
+ 		border: 2px solid #fff;
+		border-radius: 4px;
+		position: absolute;
+		margin-left: 900px;
+		margin-top: -25px;
+ 	}
+ 	.optbtn:hover { color: #888; }
+ 	.optbtn.active {
+ 		border-color: #ddd;
+ 		box-shadow: inset 0px 2px 10px 1px #DDD;
+ 		background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #EEE), color-stop(1, white));
+ 		text-shadow: 0px 2px 0px white;
+ 		color: #555;
+ 	}
+ 	.optbloc {
+ 		border-bottom: 1px solid #CCC;
+		padding-bottom: 30px;
+		margin-bottom: 50px;
+		display: none;
+ 	}
+ 	.optbloc .right, .optbloc .left {
+ 		width: 430px;
+ 		float: left;
+ 	}
+ 	.optbloc .right { float: right; }
+ 	.optbloc label {
+ 		width: 140px;
+ 		display: inline-block;
+ 	}
+ 	.etabs { margin: 0 0 10px 0; padding: 0; border-bottom: 1px solid #ddd; }
+	.etabs li { display: inline-block; zoom:1; border-bottom: none; }
+	.etabs li a { font-family: "Roboto", sans-serif; line-height: 2em; border-radius: 4px 4px 0px 0px; display: block; text-decoration: none; 
+		padding: 0 20px; margin-right: 2px; outline: none; }
+	.etabs li a:hover { background-color: #eee; }
+	.etabs li.active { background: #fff; padding-top: 6px; position: relative; top: 1px; }
+	.etabs li a.active { color: #555; border: 1px solid #ddd; border-bottom: none; }
+	.tab-container .panel-container { display: inline-block; margin-bottom: 20px; background: #fff; padding: 10px; -moz-border-radius: 0 4px 4px 4px; -webkit-border-radius: 0 4px 4px 4px; }
+    
+ </style>
+</head>
+<body>
+
+<div class="bloc">
+<h1>Proteodyne</h1>
+<h4>Proteody generator</h4>
+<p>Enter a protein amino acids sequence in <a target="_blank" href="http://www.uniprot.org/help/fasta-headers">FASTA format</a> 
+as found on <a target="_blank" href="http://www.uniprot.org/">UniProt website</a> 
+(i.e. <a target="_blank" href="http://www.uniprot.org/uniprot/P99999.fasta">Cytochrome C</a>), 
+then clic on "Generate proteody" to get protein Period, Stimulation and Inhibition sheet with the corresponding midi files and colors sequences. 
+This work is based on Joël Sternheimer patent <a target="_blank" href="http://www.google.com/patents/EP0648275B1?cl=en&hl=en">
+"Method for the epigenetic regulation of protein biosynthesis by scale resonance"</a>. 
+Proteodyne only works with a recent version of Google Chrome or Mozilla Firefox web browsers.</p>	
+</div>
+
+<div class="bloc">
+<h2>Amino acids sequence</h2>
+<textarea id="sequence"></textarea><br/>
+<div id="generate" class="myButton" onclick="compute_proteody();"><span>Generate proteody</span><img style="display:none;" src="images/486.GIF"/></div>
+</div>
+
+<div id="result"></div>
+
+<script type="text/javascript">
+// add underscore.string with underscrore js
+_.mixin(_.string.exports());
+//_.mixin(ss);
+
+// Avoid any change
+var colors = {
+	ocre:      [ "#CC7722", "#1c6faa" ],
+	darkred:   [ "#8B0000", "#006f00" ],
+	vermillon: [ "#E34234", "#2cc04f" ],
+	orange:    [ "#FF6600", "#0099cc" ],
+	lemon:     [ "#f6fe3c", "#c034db" ],
+	green:     [ "#00FF00", "#ff0000" ],
+	emerald:   [ "#01D758", "#ff2501" ],
+	blue:      [ "#0000FF", "#ffbd00" ],
+	indigo:    [ "#2F007F", "#9f8c00" ],
+	purple:    [ "#7F00FF", "#ffee00" ],
+	black:      [ "#000000", "#ffffff" ]
+};
+// Avoid any change
+var acids = {
+	a: { s: "C4", i: "D5", c: colors.vermillon }, // Alanine
+	r: { s: "C5", i: "D4", c: colors.indigo }, // Arginine
+	n: { s: "G4", i: "G4", c: colors.lemon }, // Asparagine
+	d: { s: "G4", i: "G4", c: colors.lemon }, // Aspartate
+	b: { s: "G4", i: "G4", c: colors.lemon }, // Aspargine or Aspartate
+	c: { s: "F4", i: "A4", c: colors.ocre }, // Cystéine
+	e: { s: "A4", i: "F4", c: colors.green }, // Glutamate
+	q: { s: "A4", i: "F4", c: colors.green }, // Glutamine
+	z: { s: "A4", i: "F4", c: colors.green }, // Glutamate or Glutamine
+	g: { s: "A3", i: "F5", c: colors.darkred }, // Glycine
+	h: { s: "Bb4", i: "E4", c: colors.emerald }, // Histidine
+	i: { s: "G4", i: "G4", c: colors.lemon }, // Isoleucine
+	l: { s: "G4", i: "G4", c: colors.lemon }, // Leucine
+	j: { s: "G4", i: "G4", c: colors.lemon }, // Leucine or Isoleucine
+	k: { s: "A4", i: "F4", c: colors.green }, // Lysine
+	m: { s: "A4", i: "F4", c: colors.green }, // Méthinonine
+	f: { s: "B4", i: "Eb4", c: colors.blue }, // Phénylalanine
+	u: { s: "B4", i: "Eb4", c: colors.blue}, // Sélénocystéine
+	p: { s: "F4", i: "A4", c: colors.ocre }, // Proline
+	s: { s: "E4", i: "Bb4", c: colors.orange }, // Sérine
+	t: { s: "F4", i: "A4", c: colors.ocre }, // Thréonine
+	w: { s: "D5", i: "C4", c: colors.purple }, // Tryptophane
+	y: { s: "C5", i: "D4", c: colors.indigo }, // Tyrosine
+	v: { s: "F4", i: "A4", c: colors.ocre },  // Valine
+	x: { s: "Db4", i: "Db4", c: colors.black } // Unknown
+};
+
+var players = {
+	stimulation: undefined,
+	inhibition: undefined
+};
+var tracks = [];
+var current_sequence = "";
+
+var sheets_colors = {
+	stimulation: new Array(),
+	inhibition: new Array()
+};
+
+var defaultConfig = {
+	tempo: 120,
+	period: 4,
+	timeSigUp: 4,
+	timeSigDown: 4,
+	pattern: ["q","q","q","q"],
+	vs: ""
+}
+
+var configurations = {
+	stimulation: defaultConfig,
+	inhibition: defaultConfig
+}
+
+
+var add_stave = function() {
+	return "tabstave notation=true tablature=false";
+}
+
+/*
+var compute_track = function(trackId, sheet_name, instrument) {
+	var track = tracks[trackId];
+	//console.log(track.toBytes().length, track.toBytes());
+	track.setInstrument(instrumentsTable[instrument].toString(16));
+	//console.log(track.toBytes().length, track.toBytes());
+	var song  = MidiWriter({ tracks: [track] });
+	$('#'+sheet_name+'-mid').attr("href", "data:audio/mid;base64,"+song.b64);
+}
+*/
+
+var durations = {
+	w: 128*4,
+	wd: 128*6,
+	h: 128*2,
+	hd: 128*3,
+	q: 128,
+	qd: 128 + 128/2,
+	"8": 128/2,
+	"8d": 128/2 + 128/4,
+	"16": 128/4,
+	"16d": 128/4 + 128/8,
+	"32": 128/8,
+	"32d": 128/8 + 128/16
+}
+
+var durations_unit = {
+	"1": "w",
+	"2": "h",
+	"4": "q",
+	"8": "8",
+	"16": "16"
+}
+
+var compute_vextab_script = function(sheet_name, notes, sequence) {
+	var n_notes  = 0;
+	var n_bars   = 0;
+	var n_staves = 0;
+
+	var config = configurations[sheet_name];
+	var noteEvents = new Array();
+	var pat = configurations[sheet_name].pattern;
+	var period = configurations[sheet_name].period;
+
+	var options = "options stave-distance=25 font-color=#888 font-size=11\n\n";
+	var vs = options + add_stave() + " time="+config.timeSigUp+"/"+config.timeSigDown+"\n  voice\n    notes ";
+
+	var text = "text .11";
+	var track = new Midi.Track();
+	track.setTempo(configurations[sheet_name].tempo);
+	//track.setInstrument($("#timbres"+((sheet_name[0] == "s") ? "Stim" : "Inhib")+" select").val());
+	track.setTimeSig(configurations[sheet_name].timeSigUp, configurations[sheet_name].timeSigDown);
+
+	_.each(notes, function(note, i) {
+		track.addNote(0, note.toLowerCase(), durations[pat[i%period]]);
+
+		/* -- create vextab sheet -- */
+		// Bb4 to Bb/4 (MIDI.js format to VexFlow one)
+		note = _.initial(note.split(/(\d)/)).join("/");
+		
+		if (note[1] == "b")
+			note = note[0]+"@"+note[2]+note[3];
+		vs   += ":"+pat[i%period] + " " + note +" ";
+		text += ",:"+pat[i%period]+","+sequence[i];
+		
+		n_notes += 1;
+		if ((i + 1) % period == 0) {
+			n_bars += 1;
+			vs     += "| ";
+			text   += ",|"
+			if (n_bars && (n_bars % 4 == 0) && i+1 < notes.length) {
+				n_staves += 1;
+				vs      += "\n"+text;
+				vs      += "\n\n"+ options + add_stave() + "\n  voice\n    notes ";
+				text    = "text .11";
+				n_notes = 0;
+				n_bars  = 0;
+			}
+		}
+	});
+
+	vs += "\n" + text;
+
+	return {"vs": vs, "track" : track};//"track": noteEvents};
+}
+
+var redraw_sheet = function(sheet_name, vs_only) {
+	var notes = _.map(players[sheet_name].all_ticks, 
+		function(e){ return { n: e.notes[0].keys[0].replace("/",""), d: e.notes[0].duration }});
+
+	var renderer = new Vex.Flow.Renderer($('#'+sheet_name)[0], 
+		Vex.Flow.Renderer.Backends.CANVAS);
+	renderer.getContext().setBackgroundFillStyle("#fff");
+	var artist = new Vex.Flow.Artist(10, 0, 900);
+	var vextab = new Vex.Flow.VexTab(artist);
+	var r = {};
+
+	if (vs_only) {
+		vextab.parse(configurations[sheet_name].vs);
+	} else {
+		r = compute_vextab_script(sheet_name, _.pluck(notes, "n"), current_sequence);
+		vextab.parse(r.vs);
+		configurations[sheet_name].vs = r.vs;
+		$("#vextab"+sheet_name).val(r.vs);
+	}
+	
+	artist.render(renderer);
+	$("#"+sheet_name).next().remove();
+	var player = new Vex.Flow.Player(artist, {
+		soundfont_url: window.location.href + "/../soundfont/",
+		tempo: configurations[sheet_name].tempo,
+		instrument:  $("#timbres"+((sheet_name[0] == "s") ? "Stim" : "Inhib")+" select").val()
+	});
+
+	player.render();
+	players[sheet_name] = player;
+
+	if (vs_only) {
+		notes = _.map(players[sheet_name].all_ticks, 
+		function(e){ return { n: e.notes[0].keys[0].replace("/",""), d: e.notes[0].duration }});
+		r.track = new Midi.Track();
+		r.track.setTempo(configurations[sheet_name].tempo);
+		r.track.setTimeSig(configurations[sheet_name].timeSigUp, configurations[sheet_name].timeSigDown);
+
+		_.each(_.pluck(notes, "n"), function(note, i) {
+			r.track.addNote(0, note.toLowerCase(), durations[configurations[sheet_name].pattern[i%configurations[sheet_name].period]]);
+		});
+	}
+	
+	$("#"+sheet_name).next()
+		.css("top", $("#"+sheet_name).offset().top)
+		.css("left", $("#"+sheet_name).offset().left + 1);
+
+	var song = new Midi.File();
+	song.addTrack(r.track);
+	$('#'+sheet_name+'-mid').attr("href", "data:audio/mid;base64,"+btoa(song.toBytes()));
+	$("#"+sheet_name+"-score").attr("href", canvasToImage(sheet_name, "#fff"));
+}
+
+var render_sheet = function(notes, sheet_name, sequence) {
+	
+	var renderer = new Vex.Flow.Renderer($('#'+sheet_name)[0], 
+		Vex.Flow.Renderer.Backends.CANVAS);
+	var artist = new Vex.Flow.Artist(10, 0, 900);
+	var vextab = new Vex.Flow.VexTab(artist);
+
+	var config = configurations[sheet_name];
+
+	var r = compute_vextab_script(sheet_name, notes, sequence);
+	var track = r.track;
+	var vs = r.vs;
+	
+	var song = new Midi.File();
+	song.addTrack(r.track);
+	$('#'+sheet_name+'-mid').attr("href", "data:audio/mid;base64,"+btoa(song.toBytes()));
+
+	configurations[sheet_name].vs = vs;
+
+	vextab.parse(vs);
+	artist.render(renderer);
+	var player = new Vex.Flow.Player(artist, {
+		soundfont_url: window.location.href + "/../soundfont/",
+		tempo: config.tempo
+	});
+	player.render();
+	players[sheet_name] = player;
+
+	$("#"+sheet_name).next()
+		.css("top", $("#"+sheet_name).offset().top)
+		.css("left", $("#"+sheet_name).offset().left + 1);
+}
+
+function canvasToImage(sheet_name, backgroundColor)
+{
+		var canvas = $('#'+sheet_name)[0];
+		var context = canvas.getContext("2d");
+        //cache height and width                
+        var w = canvas.width;
+        var h = canvas.height;
+
+        var data;
+        if(backgroundColor)
+        {
+                //get the current ImageData for the canvas.
+                data = context.getImageData(0, 0, w, h);
+                //store the current globalCompositeOperation
+                var compositeOperation = context.globalCompositeOperation;
+                //set to draw behind current content
+                context.globalCompositeOperation = "destination-over";
+                //set background color
+                context.fillStyle = backgroundColor;
+                //draw background / rect on entire canvas
+                context.fillRect(0,0,w,h);
+        }
+        //get the image data from the canvas
+        var imageData = canvas.toDataURL("image/png");
+        if(backgroundColor)
+        {
+                //clear the canvas
+                context.clearRect (0,0,w,h);
+                //restore it with original / cached ImageData
+                context.putImageData(data, 0,0);                
+                //reset the globalCompositeOperation to what it was
+                context.globalCompositeOperation = compositeOperation;
+        }
+        //return the Base64 encoded data url string
+        return imageData;
+}
+
+var render_colors = function(sheets, sequence, period) {
+	_.each(sheets, function(lcolors, sheet_name, list) {
+		_.each(sequence, function(el, i) {
+			$('<div class="cbloc"><span title="Amino acid : '+el+' - Note : '+acids[el][sheet_name[0]]+
+				'" style="background-color: '+lcolors[i]+';"/></div>')
+			.appendTo("#"+sheet_name+"-scolors");
+		});
+		$("#"+sheet_name+"-gif").click(function(evt) { 
+			evt.preventDefault(); 
+			$(this).off("click");
+			render_gifs(lcolors, sheet_name); 
+		});
+		$("#"+sheet_name+"-scolors").css("width", 
+			(Math.floor(430 / (period * 12)) * (period * 12)) + "px");
+	});
+}
+
+var get_midi_note = function(note) {
+	var n = note.substring(0, note.length - 1).toLowerCase();
+	var octave = note.substr(-1);
+	return (24 + (octave * 12)) + Vex.Flow.Music.noteValues[n].int_val;
+}
+
+var compute_intervals = function(notes) {
+	var n = new Array();
+	var intervals = new Array();
+	//console.log(notes);
+	_.each(notes, function(el, i) {
+		n[i] = { 
+			note: el.substring(0, el.length - 1).toLowerCase(), 
+			octave: Number(el.substr(-1)), 
+			midi: 0
+		};
+		n[i].midi = (24 + (n[i].octave * 12)) + Vex.Flow.Music.noteValues[n[i].note].int_val;
+	});
+	
+	for (var i = 0; i+1 < n.length; i++) {
+		intervals[i] = n[i+1].midi - n[i].midi;
+	}
+
+	return intervals;
+}
+
+/*
+ * get signature (gs) of a melodic interval
+ */
+var gs = function(n) {
+	if (n > 0)
+		return 1;
+	if (n < 0)
+		return 2;
+	return 0;
+}
+
+var autocorrelation = function(sequence) {
+	var s = _.uniq(sequence);
+	var intervals = compute_intervals(sequence);
+	var is = _.uniq(intervals);
+	//intervals.splice(0,0,0);
+	
+	var result = {
+		notes: [0,0,0,0,0,0,0,0,0,0,0,0], // notes
+		melody: [0,0,0,0,0,0,0,0,0,0,0,0], // signatures triplets 
+		mov: [0,0,0,0,0,0,0,0,0,0,0,0], // signatures
+		dist: [0,0,0,0,0,0,0,0,0,0,0,0], // melodic distances
+		sum: [0,0,0,0,0,0,0,0,0,0,0,0]
+	}
+
+	_.each(s, function(el, n) {
+		_.each(result.notes, function(r, k){	
+			for (var i=0; i < sequence.length; ++i) {
+				if (sequence[i] == el && sequence[i+k+1] == sequence[i])
+					result.notes[k] += 1;
+			}
+		});
+	});
+
+	_.each(is, function(itv, ic) {
+		_.each(result.dist, function(r, k) {
+			for (var i=0; i < intervals.length; ++i) {
+				if (intervals[i] == itv && intervals[i+k+1] == intervals[i])
+					result.dist[k] += 1;
+			}
+		});
+	});
+
+	
+	_.each([0,1,2], function(itvs) {
+		_.each(result.mov, function(r, k) {
+			for (var i=0; i < intervals.length; ++i) {
+				if (gs(intervals[i]) == gs(itvs) && gs(intervals[i+k+1]) == gs(intervals[i]))
+					result.mov[k] += 1;
+			}
+		});
+	});
+	
+	
+	var triplets = { a: new Array(), b: new Array() };
+	_.each(sequence, function(el, i) {
+		triplets.a = compute_intervals(sequence.slice(i, i+4));
+		if (triplets.a.length > 2) {
+			_.each(result.melody, function(r, k){
+				triplets.b = compute_intervals(sequence.slice(i+k+1, i+k+4+1));
+				if (triplets.b.length > 2 && JSON.stringify(triplets.a.map(gs)) == JSON.stringify(triplets.b.map(gs))) { 
+					result.melody[k] += 1;	
+				}
+			});
+		}
+	});
+
+	result.sum = result.notes.map(function(el, i) { return result.melody[i] + el + result.mov[i] + result.dist[i]; }); //
+	
+	//  console.log(ss.median(result.mov), ss.median(result.notes), ss.median(result.dist), ss.median(result.melody));
+
+	return result;
+}
+
+var scrollTo = function (id) {
+    $('html,body').animate({
+        scrollTop: $("#"+id).offset().top},
+        'slow');
+}
+
+
+var apply_settings = function(config) {
+	var vs_only = false;
+	if ($("#"+config+"-tabs li a.active").attr('href').slice(-1) == 1) {
+		configurations[config].tempo = $("#tempo"+config).val();
+		configurations[config].period = $("#period"+config).val();
+		configurations[config].timeSigUp = $("#time"+config+"Up").val();
+		configurations[config].timeSigDown = $("#time"+config+"Down").val();
+		configurations[config].pattern = $("#pattern"+config).val().split(",");
+	} else {
+		configurations[config].vs = $("#vextab"+config).val();
+		vs_only = true;
+	}
+	redraw_sheet(config, vs_only);
+	$("#"+config+"-bloc .optbtn").click();
+/*
+	$("#"+config+"-bloc .optbloc").slideUp(400, function() {
+		$("#"+config).next()
+			.css("top", $("#"+config).offset().top);
+		//.css("left", $("#"+config).offset().left + 1);
+	});
+*/
+}
+
+var getOptPanel = function(sname) {
+	return '<div class="optbloc">'+
+		'<h4>Configuration</h4>'+
+		'<div id="'+sname+'-tabs" class="tab-container">'+
+			'<ul class="etabs"><li><a href="#tabs-1">Basic</a></li><li><a href="#tabs-2">Advanced</a></li></ul>'+
+			'<div class="panel-container">'+
+				'<div id="tabs-1">'+
+					'<div class="left">'+
+					'<p><label>Tempo</label><input type="text" id="tempo'+sname+'" value="120"/></p>'+
+					'<p><label>Period</label><select id="period'+sname+'">'+
+					_.chain(_.range(1,13)).map(function(e) { return '<option value="'+e+'">'+e+'</option>'}).value().join()+
+					'</select></p>'+
+					'</div>'+
+					'<div class="right">'+
+					'<p><label>Time signature</label><select id="time'+sname+'Up">'+
+					_.chain(_.range(1,37)).map(function(e) { return '<option value="'+e+'">'+e+'</option>'}).value().join()+
+					'</select> / <select id="time'+sname+'Down">'+
+					_.chain([1,2,4,8,16,32,64]).map(function(e) { return '<option value="'+e+'">'+e+'</option>'}).value().join()+
+					'</select></p>'+
+					'<p><label>Pattern</label><input type="text" id="pattern'+sname+'" value="q,q,q,q"/></p>'+
+					'</div>'+
+				'</div>'+
+				'<div id="tabs-2">'+
+					'<p style="clear: both;">Notes</p>'+
+					'<textarea id="vextab'+sname+'"></textarea>'+
+				'</div>'+
+			'</div>'+
+		'</div>'+
+		'<div class="myButton" onclick="apply_settings(\''+sname+'\');">Apply changes</div>'+
+	'</div>'
+}
+
+var clear_everything = function() {
+	$("#result").html($(
+	'<div class="bloc hidden" id="period-bloc">'+
+		'<div id="pheader"></div>'+
+		'<table class="hor-minimalist-a">'+
+			'<thead>'+
+				'<tr id="kvals"><th class="first" scope="col">Values of <strong><i>k</i></strong></th></tr>'+
+			'</thead>'+
+			'<tfoot>'+
+				'<tr id="tvals"><td class="first">Total</td></tr>'+
+			'</tfoot>'+
+			'<tbody>'+
+				'<tr id="nvals"><td class="first">Autocorrelation of notes</td></tr>'+
+				'<tr id="mvals"><td class="first">Autocorrelation of melodic shapes</td></tr>'+
+				'<tr id="svals"><td class="first">Autocorrelation of signatures</td></tr>'+
+				'<tr id="dvals"><td class="first">Autocorrelation of melodic distances</td></tr>'+
+			'</tbody>'+
+		'</table>'+
+		'<table class="hor-minimalist-a" id="stats">'+
+			'<thead>'+
+				'<tr><th class="first">Stats</th><th>Mean</th><th>Standard deviation</th><th>Variance</th></th>'+
+			'</thead>'+
+			'<tfoot>'+
+				'<tr id="sum-stats"><td class="first">Total</td></tr>'+
+			'</tfoot>'+
+			'<tbody>'+
+				'<tr id="notes-stats"><td class="first">Autocorrelation of notes</td></tr>'+
+				'<tr id="melody-stats"><td class="first">Autocorrelation of melodic shapes</td></tr>'+
+				'<tr id="mov-stats"><td class="first">Autocorrelation of signatures</td></tr>'+
+				'<tr id="dist-stats"><td class="first">Autocorrelation of melodic distances</td></tr>'+
+			'</tbody>'+
+		'</table>'+
+		'<table class="hor-minimalist-a aleft" id="keys-stimulation">'+
+			'<thead><tr><th class="first">Stimulation keys</th><th>Matches</th><th>Timbres (top 5)</th><th>Coef.</th></tr></thead>'+
+			'<tbody></tbody>'+
+		'</table>'+
+		'<table class="hor-minimalist-a aleft" id="keys-inhibition">'+
+			'<thead><tr><th class="first">Inhibition keys</th><th>Matches</th><th>Timbres (top 5)</th><th>Coef.</th></tr></thead>'+
+			'<tbody></tbody>'+
+		'</table>'+
+		'<h5>Notes and Colors repartition</h5>'+
+		'<div id="chartNotesStim" style="width:430px;height: 200px; float: left; margin-right: 40px;"></div>'+
+		'<div id="chartNotesInhib" style="width:430px;height: 200px; float: left;"></div>'+
+		'<br style="clear: both;"/>'+
+
+		'<h5>Color sequences</h5>'+
+		'<div id="stimulation-scolors" style="float: left; margin-right: 40px;"></div>'+
+		'<div id="inhibition-scolors" style="float: right;"></div>'+
+		'<br style="clear: both;"/>'+
+		'<p style="float: left;">&#9728; <a href="#." target="_blank" id="stimulation-gif">Create</a> animated GIF</p>'+
+		'<p style="float: right;">&#9728; <a href="#." target="_blank" id="inhibition-gif">Create</a> animated GIF</p>'+
+		'<br style="clear: both;"/>'+
+
+		'<h5>Melodic distances</h5>'+
+		'<div id="chartMelodicDistStim" style="width:430px;height: 250px; float: left; margin-right: 40px;"></div>'+
+		'<div id="chartMelodicDistInhib" style="width:430px;height: 250px; float: left;"></div>'+
+		'<br style="clear: both;"/>'+
+
+		'<h5>Melodic shapes</h5>'+
+		'<div id="chartMelodicShapeStim" style="width:430px;height: 250px; float: left; margin-right: 40px;"></div>'+
+		'<div id="chartMelodicShapeInhib" style="width:430px;height: 250px; float: left;"></div>'+
+		'<br style="clear: both;"/>'+
+	'</div>'+
+	'<div class="bloc hidden" id="stimulation-bloc">'+
+	'<div class="optbtn">&#9881;</div>'+
+	getOptPanel("stimulation") +
+	'<h2>Stimulation</h2>'+
+	'<h4>&#9835; Download <a href="" id="stimulation-score" download="stimulation.png">score</a>'+
+	' or <a href="" id="stimulation-mid" download="stimulation.mid">midi file</a>'+
+		'<label id="timbresStim"><select></select></label></h4>'+
+	'<div class="sheet"><canvas id="stimulation"></canvas></div>'+
+	//'<h4>&#9728; Colors sequence - <a href="#." target="_blank" id="stimulation-gif">create</a> animated GIF</h4>'+
+	//'<div class="scolors"></div>'+
+	'</div>'+
+	'<div class="bloc hidden" id="inhibition-bloc">'+
+	'<div class="optbtn">&#9881;</div>'+
+	getOptPanel("inhibition") +
+	'<h2>Inhibition</h2>'+
+	'<h4>&#9835; Download <a href="" id="inhibition-score" download="inhibition.png">score</a>'+
+	' or <a href="" id="inhibition-mid" download="inhibition.mid">midi file</a>'+
+		'<label id="timbresInhib"><select></select></label></h4>'+
+	'<div class="sheet"><canvas id="inhibition"></canvas></div>'+
+	//'<h4>&#9728; Colors sequence - <a href="#." target="_blank" id="inhibition-gif">create</a> animated GIF</h4>'+
+	//'<div class="scolors"></div>'+
+	'</div>'));
+}
+
+var render_gifs = function(el, sname) {
+	var canvas = document.createElement('canvas');
+	canvas.width = 600;
+	canvas.height = 600;
+
+	var ctx = canvas.getContext("2d");
+	var gif = new GIF({
+		workers: 6,
+		quality: 10,
+		workerScript: "js/gif.worker.js",
+		width: 600,
+		height: 600
+	});
+
+	_.each(el, function(color, i) {
+		ctx.fillStyle = color;
+		ctx.fillRect(0,0,600,600);
+		gif.addFrame(ctx, {copy: true, delay: 500});
+	});
+
+	//gif.on("start", Date.now());
+
+	gif.on("progress", function(p) {
+		$("#"+sname+"-gif").text(Math.round(p * 100)+'%');
+	});
+
+	gif.on("finished", function(blob) {
+		$("#"+sname+"-gif").attr("href", URL.createObjectURL(blob)).text("Download");
+	});
+
+	gif.render();
+}
+
+/*
+var compute_frequencies = function() {
+	var ln = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
+	var freqs = {};
+	for (var i=0; i < 10; ++i) {
+		_.each(ln, function(el, n) {
+			freqs[el+""+i] = Note.fromLatin(el+""+i).frequency(); 
+		});
+	}
+
+	return freqs;
+}
+*/
+
+var closestOf = function(ar, val) {
+	var closest = null;
+	var k = Object.keys(ar);
+	for (var i=0; i < k.length; ++i) {
+		if (closest == null || Math.abs(ar[k[i]] - val) < Math.abs(closest - val)) {
+    		closest = ar[k[i]];
+  		}
+	}
+	return closest;
+}
+
+var compute_timbres = function(notes, keys) {
+	//var freqs = compute_frequencies();
+	var fnotes = _.groupBy(_.map(notes, function(el, i) { 
+			return frequencies[el]; }), function(el) { return el.toFixed(2) });
+	_.each(fnotes, function(el,i,l) { l[i] = el.length; });
+	
+	var timbres_keys_freqs = {};
+	var timbres_coef = {};
+	var all_freqs = Object.keys(fnotes);
+	_.each(keys, function(k, kname) {
+		kname = kname.slice(0, -2) + "4";
+		_.each(timbres, function(t, tname) {
+			if (timbres_keys_freqs[kname] == undefined)
+				timbres_keys_freqs[kname] = {};
+			timbres_keys_freqs[kname][tname] = {};
+			_.each(t[kname], function(el, i) {
+				var ff = closestOf(frequencies, el[1]);
+				timbres_keys_freqs[kname][tname][ff.toFixed(2)] = el[0];
+			});
+			all_freqs = _.union(all_freqs, Object.keys(timbres_keys_freqs[kname][tname]));
+		});
+	});
+	all_freqs = _.sortBy(all_freqs, Number);
+	//console.log(timbres_keys_freqs, all_freqs, fnotes);
+
+	_.each(timbres_keys_freqs, function(k, kname) {
+		var xf = [];
+		if (timbres_coef[kname] == undefined)
+			timbres_coef[kname] = {};
+		_.each(k, function(instru, iname) {
+			var yf = [];
+			_.each(all_freqs, function(f,i) {
+				if (xf.length == yf.length) {
+					xf[i] = (fnotes[f] == undefined) ? 0 : fnotes[f];
+				}
+				yf[i] = (instru[f] == undefined) ? 0 : instru[f];
+			});
+			timbres_coef[kname][iname] = getPearsonsCorrelation(yf, xf);
+		});
+		timbres_coef[kname] = _.chain(timbres_coef[kname])
+			.pairs()
+			.sortBy(function(el) { return el[1]; })
+			.last(5)
+			.reverse()
+			.value();
+	});
+	return timbres_coef;
+}
+
+var render_timbres = function(sheets) {
+	_.each(sheets, function(notes, sname) {
+		var keys = computeKey(notes);
+		var t = compute_timbres(notes, keys);
+		var tselect = [];
+		var result = [];
+		_.each(keys, function(k,i) {
+			var inl = i.slice(0, -2) + "4";
+			tselect.push(_.chain(t[inl]).pluck(0)
+				.map(function(e){ return { val: e, txt: _.chain(e).humanize().titleize().value() }}).value());
+			result.push([i, k, 
+				_.chain(t[inl]).pluck(0).toSentence(", ", ", ").humanize().titleize().value(),
+				Number(_.reduce(t[inl], function(e,i){ return e+i[1]; }, 0) / t[inl].length).toFixed(3)]);
+		});
+
+		tselect = _.chain(tselect).flatten().groupBy(function(x){ return x.val; }).value();
+		_.each(tselect, function(e) { 
+			$("#timbres"+((sname[0] == "s") ? "Stim" : "Inhib")+" select")
+				.append($("<option>").attr('value', e[0].val).text(e[0].txt));
+		});
+
+		_.each(result, function(e, i) {
+			$("<tr><td style=\"width: 150px;\">"+e[0]+"</td><td style=\"width: 100px;\">"+e[1]+
+				"</td><td>"+e[2]+"</td><td style=\"text-align: right;\">"+e[3]+"</td></tr>").appendTo("#keys-"+sname+" tbody")
+		});
+	});
+}
+
+
+var render_charts = function(sheets, colors, sequence) {
+
+	var statsNotes = {};
+	var statsColors = {};
+	var intervals = {};
+	_.each(sheets, function(notes,sname) {
+		statsNotes[sname] = _.groupBy(notes, function(e) { return e });
+		_.each(Object.keys(statsNotes[sname]), function(el) { statsNotes[sname][el] = statsNotes[sname][el].length; });
+		//console.log("Stats notes", sname, statsNotes);
+		intervals[sname] = compute_intervals(notes);
+		statsColors[sname] = _.groupBy(colors[sname], function(e) { return e });
+		_.each(Object.keys(statsColors[sname]), function(el) { statsColors[sname][el] = statsColors[sname][el].length; });
+	});
+	//console.log("intervals", intervals);
+	
+	var dataSource = _.chain(statsNotes)
+		.map(function(s,sname) {
+			return _.chain(s)
+				.map(function(e,i){ return { note: i, amount: e, s: sname }; })
+				.sortBy(function(e,i){ return frequencies[e.note]; })
+				.value()
+		}).value();
+	//console.log(statsNotes, statsColors, colors, sheets);
+	
+	//console.log(dataSource);
+
+	var barOpts = {
+		dataSource: dataSource[0],
+		commonSeriesSettings: {
+			argumentField: "note",
+			valueField: "amount",
+			label: { 
+				visible: true,
+				backgroundColor: "rgba(255,255,255,0)",
+				font: { color: "#888" } 
+			},
+			color: "#627db4"
+		},
+		animation: { enabled: false },
+		series: [{
+			type: "bar",
+			name: "Stimulation"
+		}],
+		valueAxis: [{
+			grid: { visible: false },
+			title: { text: "Stimulation", margin: -5 },
+			label: { visible: false }
+		}],
+		legend: {
+			visible: false
+		},
+		tooltip: { 
+			enabled: false,
+			color: "#555", 
+			font: {
+				size: 12,
+				weight: 300
+			}
+		}
+	}
+
+	$("#chartNotesStim").dxChart(barOpts);
+
+	barOpts.dataSource = dataSource[1];
+	barOpts.valueAxis[0].title.text = "Inhibition";
+
+	$("#chartNotesInhib").dxChart(barOpts);
+
+	var dm = {
+		stimulation: _.chain(acids).pairs().pluck(1).groupBy(function(e){return e.c[0].toLowerCase(); }).value(),
+		inhibition: _.chain(acids).pairs().pluck(1).groupBy(function(e){return e.c[1].toLowerCase(); }).value()
+	};
+	//console.log(dm, dm["#2cc04f"]);
+	
+	dataSource = _.chain(statsColors)
+		.map(function(s,sname) {
+			return _.chain(s)
+				.map(function(e,i){ return { color: i, amount: e, s: sname }; })
+				.sortBy(function(e,i){ 
+					return frequencies[dm[sname][e.color.toLowerCase()][0][(sname == "stimulation") ? "s" : "i"]]; })
+				.value()
+		}).value();
+
+
+	_.delay(function(dataSource){ 
+		_.each($("#chartNotesStim").dxChart('instance').getAllSeries()[0].points, function(e,i) {
+			$(e.graphic.element).attr("fill", dataSource[0][i].color);
+		});
+		$("#chartNotesStim .dxc-trackers rect").hover(function(e){e.stopPropagation();}, function(e){e.stopPropagation();});
+
+		_.each($("#chartNotesInhib").dxChart('instance').getAllSeries()[0].points, function(e,i) {
+			$(e.graphic.element).attr("fill", dataSource[1][i].color);
+		});
+		$("#chartNotesInhib .dxc-trackers rect").hover(function(e){e.stopPropagation();}, function(e){e.stopPropagation();});
+	}, 3000, dataSource);
+
+	$("#timbresStim select").change(function(){ 
+		players["stimulation"].options.instrument = $(this).val();
+	});
+	
+	$("#timbresInhib select").change(function(){ 
+		players["inhibition"].options.instrument = $(this).val();
+	});
+
+	var idist = {stimulation: [], inhibition: [], total: []};
+	var ishape = {stimulation: [], inhibition: [], total: []};
+	var refnote = [get_midi_note(sheets.stimulation[0]), get_midi_note(sheets.inhibition[0])];
+	//console.log(sheets.stimulation);
+	_.each(intervals, function(e,i) {
+		_.each(e, function(a,k) {
+			refnote[0] += a;
+			refnote[1] += (a > 0) ? 1 : ((a < 0) ? -1 : 0); 
+			ishape[i].push({val: refnote[1], n: k});
+			idist[i].push({val: refnote[0], n: k});
+			ishape.total.push(refnote[1]);
+			idist.total.push(refnote[0]);
+		});
+	});
+
+	//console.log(dm, dataSource, statsNotes);
+
+	var lineOpts = {
+		dataSource: ishape.stimulation,
+		commonSeriesSettings: {
+			argumentField: 'n',
+			color: "#627db4"
+		},
+		series: [
+			{ valueField: 'val', type: "stepLine", point: { visible: false, size: 2 } }
+		],
+		valueAxis: [{
+			label: { visible: false },
+			grid: { visible: false },
+			max: _.max(ishape.total) + 1,
+			min: _.min(ishape.total) - 1
+		}],
+		argumentAxis: [{
+			label: { visible: false }
+		}],
+		legend: {
+			visible: false
+		}
+	}
+
+	$("#chartMelodicShapeStim").dxChart(lineOpts);
+	lineOpts.dataSource = ishape.inhibition;
+	lineOpts.commonSeriesSettings.color = "#c6a56c";
+	$("#chartMelodicShapeInhib").dxChart(lineOpts);
+
+	
+	lineOpts.valueAxis[0].max = _.max(idist.total) + 10;
+	lineOpts.valueAxis[0].min = _.min(idist.total) - 10;
+	lineOpts.dataSource = idist.inhibition;
+	lineOpts.series[0].type = "scatter";
+	lineOpts.series[0].point.visible = true;
+	$("#chartMelodicDistInhib").dxChart(lineOpts);
+	lineOpts.dataSource = idist.stimulation;
+	lineOpts.commonSeriesSettings.color = "#627db4";
+	$("#chartMelodicDistStim").dxChart(lineOpts);
+	
+}
+
+var render_first_bloc = function(sheets, header, ar) {
+	// index of the max value of the autocorrelation sum array
+	var period = 1 + ar.sum.indexOf(Math.max.apply(Math, ar.sum));
+
+	var m = header.match(/^\>\w+\|(\w+)\|(\w+) ([^\=]+)=([^\=]+).*$/);
+	//alert(m[1]);
+	header = _.sprintf("<h2>%s</h2><h4>%s</h4>"+
+		"<table class=\"hor-minimalist-a mini\"><tbody><tr><td>Unique Identifier</td><td>%s</td></tr>"+
+		"<tr><td>UniProtKB Entry</td><td>%s</td></tr></tbody>"+
+		"<tfoot><tr><td>Period  (<i>k</i> )</td><td>%d</td></tr></tfoot></table>", 
+		m[3].slice(0, -3), m[4].slice(0, -3), m[1], m[2], period);
+	$("#pheader").html($(header));
+	$('html head').find('title').text("Proteody of "+m[3].slice(0, -3)+" - "+m[4].slice(0, -3));
+
+	//$("#period").html(""+period);
+	var maximums = {};
+	_.each(ar, function(elts, an) {
+		maximums[an] = _.max(elts);
+	})
+	_.each(ar.notes, function(e, i) {
+		$('<th scope="col">'+(i+1)+"</th>").appendTo("#kvals");
+		if (e == maximums.notes)
+			$("<td><u>"+e+"</u></td>").appendTo("#nvals");
+		else
+			$("<td>"+e+"</td>").appendTo("#nvals");
+		if (ar.melody[i] == maximums.melody)
+			$("<td><u>"+ar.melody[i]+"</u></td>").appendTo("#mvals");
+		else
+			$("<td>"+ar.melody[i]+"</td>").appendTo("#mvals");
+		if (ar.dist[i] == maximums.dist)
+			$("<td><u>"+ar.dist[i]+"</u></td>").appendTo("#dvals");
+		else
+			$("<td>"+ar.dist[i]+"</td>").appendTo("#dvals");
+		if (ar.mov[i] == maximums.mov)
+			$("<td><u>"+ar.mov[i]+"</u></td>").appendTo("#svals");
+		else
+			$("<td>"+ar.mov[i]+"</td>").appendTo("#svals");
+		if (ar.sum[i] == maximums.sum)
+			$("<td><u>"+ar.sum[i]+"</u></td>").appendTo("#tvals");
+		else
+			$("<td>"+ar.sum[i]+"</td>").appendTo("#tvals");
+	});
+
+	var n = null;
+	_.each(ar, function(el, i) {
+		n = $("#"+i+"-stats");
+		$("<td>"+ss.mean(el).toFixed(2)+"</td>").appendTo(n);
+		$("<td>"+ss.standard_deviation(el).toFixed(2)+"</td>").appendTo(n);
+		$("<td>"+ss.variance(el).toFixed(2)+"</td>").appendTo(n);
+	});
+
+	return period;
+}
+
+
+var compute_proteody = function() {
+	//var pf = ">tr|Q8H6T6|Q8H6T6_PHAVU Auxin-regulated protein OS=Phaseolus vulgaris GN=SAUR1 PE=2 SV=1\nMDDGGGSKLSGIRQIVRLKEMFQKWQTVTLGSKESNHDSDVARPGGIPPMINKRLTNVLY\nCDSDEDSCYSPQPPHDVPKGYLAVYVGPELRRFIIPTSYLSHSLFKVLLEKAAEEFGFDQ\nSGGLTIPCEIETFKYLLNCMENHDDSSAGNTGTVEE";
+
+	$("#generate span").hide();
+	$("#generate img").show();
+
+	setTimeout(do_stuff, 2000);
+
+}
+
+var do_stuff = function() {
+	clear_everything();
+
+	var pf = $("#sequence").val();
+
+	// var sequence = "";
+	var sequence = _.lines(pf);
+	var header = ">sp|000000|UNKNOWN No name OS=No specie GN=0 PE=0 SV=0";
+
+	var sheets = {
+		stimulation: new Array(),
+		inhibition: new Array()
+	};
+
+	sheets_colors = {
+		stimulation: new Array(),
+		inhibition: new Array()
+	};
+
+	// Extract header from the array
+	if (sequence[0].indexOf(">") == 0) {
+		header = sequence[0];
+		sequence = _.rest(sequence);
+	}
+
+	sequence = sequence.join("").toLowerCase();
+	current_sequence = sequence;
+
+	// Create stimulation and inhibition notes from sequence
+	_.each(_.chars(sequence), function(el, i) {
+		el = acids[el];
+		sheets.stimulation[i] = el.s;
+		sheets.inhibition[i] = el.i;
+		sheets_colors.stimulation[i] = el.c[0];
+		sheets_colors.inhibition[i] = el.c[1];
+	});
+
+	$('.bloc.hidden').removeClass("hidden");
+
+	var ar = autocorrelation(sheets.stimulation);
+	var period = render_first_bloc(sheets, header, ar);
+
+	render_timbres(sheets);
+	render_colors(sheets_colors, sequence, period);
+	render_charts(sheets, sheets_colors, sequence);
+
+	_.each(sheets, function(notes, i) {
+		render_sheet(notes, i, sequence, 4);
+		
+		$("#"+i+"-bloc .optbtn").click(function(e) {
+			$("#"+i+"-bloc .optbloc").slideToggle(400, function() {
+				$("#"+i).next()
+					.css("top", $("#"+i).offset().top);
+			});
+			$(this).toggleClass("active");
+		});
+		$("#vextab"+i).val(configurations[i].vs);
+		$("#"+i+"-score").attr("href", canvasToImage(i, "#fff"));//"data:image/png;base64,"+)
+		$(document).ready(function(){$("#"+i+"-tabs").easytabs()});
+	});
+
+	players.stimulation.options.instrument = $("#timbresStim select").val();
+	players.inhibition.options.instrument = $("#timbresInhib select").val();
+
+
+	setTimeout(function() {
+		$("#generate img").hide();
+		$("#generate span").show();
+		setTimeout(function(){scrollTo("result")}, 500);
+	}, 1000);
+}
+
+</script>
+</body>
+</html>
